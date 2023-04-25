@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:abssence/model/seance.dart';
 import 'package:abssence/pages/login.dart';
 import './updatepage.dart';
 import 'main.dart';
@@ -75,12 +76,16 @@ class Menu extends StatefulWidget {
 class _Menu extends State<Menu> {
   final String user_id;
   _Menu({required this.user_id});
+  Seance? seance = null; 
   @override
-
+   
   // ui user interface Design (likaydar fi build)
   Widget build(BuildContext context) {
     // TODO: implement build
+    
+    print(this.user_id);
     return Scaffold(
+    
         appBar: AppBar(
           
           title: Text(
@@ -218,4 +223,17 @@ class _Menu extends State<Menu> {
         
 );
   }
+
+void getSeanceByProf() async {
+    final response = await http
+        .get(Uri.parse('http://10.0.2.2/api_data/api/studentdata.php??prof_id='+this.user_id));
+    print(response.toString());
+    if (response.statusCode == 200) {
+      final List<dynamic> result = json.decode(response.body);
+      this.seance = new Seance(result[0]['date_D'],result[0]['date_F'],result[0]['ID_SEANCE']);
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
+
 }

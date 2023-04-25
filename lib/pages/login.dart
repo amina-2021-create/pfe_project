@@ -145,7 +145,7 @@ class log extends State<Auth> {
           // ignore: use_build_context_synchronously
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => Menu(
-                     user_id: data?.id,
+                     user_id: data['Id_User'],
               )));
         } else {
           print('failed');
