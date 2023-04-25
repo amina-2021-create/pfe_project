@@ -74,7 +74,9 @@ class Menu extends StatefulWidget {
 class _Menu extends State<Menu> {
   final String user_id;
   _Menu({required this.user_id});
-  Seance? seance = null; 
+  Seance? seance = null;
+  List<Seance> seances = [];
+
   @override
    
   // ui user interface Design (likaydar fi build)
@@ -220,15 +222,14 @@ class _Menu extends State<Menu> {
 
 void getSeanceByProf() async {
     final response = await http
-        .get(Uri.parse('http://10.0.2.2/api_data/api/studentdata.php??prof_id='+this.user_id));
+        .get(Uri.parse('http://10.0.2.2/api_data/api/studentdata.php?prof_id=${this.user_id}'));
     print(response.body.toString());
     if (response.statusCode == 200) {
       var result = jsonDecode(response.body.toString());
-      List<Seance> seances = result.map((e) => Seance.fromJson(e)).toList();
-      this.seance = seances[0];
-      setState() {
-         this.seance = seances[0];
-      }
+      seances = result.map((e) => Seance.fromJson(e)).toList();
+      setState(() {
+         seance = seances[0];
+      });
 
     } else {
       throw Exception('Failed to load data');
