@@ -145,7 +145,7 @@ class log extends State<Auth> {
           // ignore: use_build_context_synchronously
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => Menu(
-                     Id_User: Id_User,
+                     user_id: data?.id,
               )));
         } else {
           print('failed');
@@ -158,10 +158,7 @@ class log extends State<Auth> {
 
   
   void handleLogin() {
-    print(login());
-    if (login() == true)
-      Navigator.push(context, MaterialPageRoute(builder: (context) => Menu(
-        Id_User: Id_User,
-      )));
+    login();
+
   }
 }

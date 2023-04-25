@@ -65,15 +65,16 @@ class test extends StatelessWidget {
 */
 
 class Menu extends StatefulWidget {
-  Menu({Key? key, required Id_User}) : super(key: key);
+  final String user_id;
+  Menu({Key? key, required this.user_id}) : super(key: key);
   // ignore: library_private_types_in_public_api
-  _Menu createState() => _Menu(Id_User: '');
+  _Menu createState() => _Menu(user_id: this.user_id);
 }
 
 // container
 class _Menu extends State<Menu> {
-  final String Id_User;      
-  _Menu({required this.Id_User});
+  final String user_id;
+  _Menu({required this.user_id});
   @override
 
   // ui user interface Design (likaydar fi build)
@@ -83,7 +84,7 @@ class _Menu extends State<Menu> {
         appBar: AppBar(
           
           title: Text(
-            Id_User,
+            user_id,
           ),
           backgroundColor: Color.fromARGB(255, 12, 67, 112),
         ),
