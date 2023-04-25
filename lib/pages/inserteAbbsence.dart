@@ -296,7 +296,7 @@ class StudentListState extends State<StudentList> {
   //region load recycler
   void _loadRecycler() async {
     final response = await http
-        .get(Uri.parse('http://10.0.2.2/api_data/api/studentdata.php'));
+        .get(Uri.parse('http://10.0.2.2/api_data/api/studentdata.php?seance_id=${this.id_seance}'));
     print(response.toString());
     if (response.statusCode == 200) {
       final List result = json.decode(response.body);

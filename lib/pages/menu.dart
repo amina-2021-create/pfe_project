@@ -204,7 +204,7 @@ class _Menu extends State<Menu> {
     width: 220, // Largeur du bouton
     height: 70, // Hauteur du bouton
     child: ElevatedButton(
-      onPressed:   routerStudentList(),
+      onPressed: () => routerStudentList(),
      
       child: Text('Seance',
       style: TextStyle(
@@ -225,12 +225,14 @@ class _Menu extends State<Menu> {
 
 void getSeanceByProf() async {
     final response = await http
-        .get(Uri.parse('http://10.0.2.2/api_data/api/studentdata.php?prof_id=${this.user_id}'));
+        .get(Uri.parse('http://10.0.2.2/api_data/api/seance.php?prof_id=${this.user_id}'));
     print(response.body.toString());
     if (response.statusCode == 200) {
       final List result = json.decode(response.body);
       seances = result.map((e) => Seance.fromJson(e)).toList();
+    if(seances.length>0 ){
        seance = seances[0];
+       }
       /*setState(() {
         
       });*/
