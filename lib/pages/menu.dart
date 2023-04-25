@@ -84,6 +84,7 @@ class _Menu extends State<Menu> {
     // TODO: implement build
     
     print(this.user_id);
+    this.getSeanceByProf();
     return Scaffold(
     
         appBar: AppBar(
@@ -132,14 +133,14 @@ class _Menu extends State<Menu> {
                       fontSize: 15, color: Color.fromARGB(255, 255, 255, 255)),
                 ),
                 onTap: () {
-                  Navigator.push(
+             /*     Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) {
                         return StudentList();
                       },
                     ),
-                  );
+                  );*/
                 },
               ),
               Divider(),
@@ -200,13 +201,8 @@ class _Menu extends State<Menu> {
     width: 220, // Largeur du bouton
     height: 70, // Hauteur du bouton
     child: ElevatedButton(
-      onPressed: () {
-          Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) {
-              return StudentList();
-            },
-          ));
-        },
+      onPressed: this.seance !=null ? routerStudentList(this.seance?.id) () :null,
+     
       child: Text('Seance',
       style: TextStyle(
           fontSize: 25, // Taille du texte
@@ -227,13 +223,25 @@ class _Menu extends State<Menu> {
 void getSeanceByProf() async {
     final response = await http
         .get(Uri.parse('http://10.0.2.2/api_data/api/studentdata.php??prof_id='+this.user_id));
-    print(response.toString());
+    print(response.body.toString());
     if (response.statusCode == 200) {
-      final List<dynamic> result = json.decode(response.body);
-      this.seance = new Seance(result[0]['date_D'],result[0]['date_F'],result[0]['ID_SEANCE']);
+      var result = jsonDecode(response.body.toString());
+      setState() {
+         this.seance = new Seance(result[0]['date_D'],result[0]['date_F'],result[0]['ID_SEANCE']);
+      }
+     
     } else {
       throw Exception('Failed to load data');
     }
+  }
+
+  routerStudentList(String? id) {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => StudentList(
+      
+      id_seance: id ?? "",
+
+    )));
   }
 
 }

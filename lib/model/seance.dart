@@ -2,9 +2,9 @@ class Seance {
   String? dateDebut;
   String? dateFin;
   String?  id;
-  Seance({
+  Seance(
     this.dateDebut,
     this.dateFin,
     this.id
-    });
+    );
   }

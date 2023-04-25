@@ -100,14 +100,16 @@ import 'package:flutter/material.dart';
 import 'menu.dart';
 
 class StudentList extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    //widget state
-    return StudentListState();
-  }
+  final String id_seance;
+
+  StudentList({Key? key, required this.id_seance}) : super(key: key);
+  // ignore: library_private_types_in_public_api
+  StudentListState createState() => StudentListState(id_seance: this.id_seance);
 }
 
 class StudentListState extends State<StudentList> {
+  final String id_seance;
+  StudentListState({required this.id_seance});
   List<userDetails> students = [];
   int count = 0;
   
