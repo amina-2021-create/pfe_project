@@ -2,13 +2,11 @@ import 'dart:convert';
 import 'package:abssence/model/seance.dart';
 import 'package:abssence/pages/login.dart';
 import './updatepage.dart';
-import 'main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'inserteAbbsence.dart';
-import 'package:get/get.dart';
 
 /*
 class test extends StatelessWidget {
@@ -226,10 +224,12 @@ void getSeanceByProf() async {
     print(response.body.toString());
     if (response.statusCode == 200) {
       var result = jsonDecode(response.body.toString());
+      List<Seance> seances = result.map((e) => Seance.fromJson(e)).toList();
+      this.seance = seances[0];
       setState() {
-         this.seance = new Seance(result[0]['date_D'],result[0]['date_F'],result[0]['ID_SEANCE']);
+         this.seance = seances[0];
       }
-     
+
     } else {
       throw Exception('Failed to load data');
     }
