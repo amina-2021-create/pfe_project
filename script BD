@@ -1,0 +1,578 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.0
+-- https://www.phpmyadmin.net/
+--
+-- Hôte : 127.0.0.1
+-- Généré le : mar. 25 avr. 2023 à 16:31
+-- Version du serveur : 10.4.24-MariaDB
+-- Version de PHP : 7.4.29
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Base de données : `pfe_kha`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `absence`
+--
+
+CREATE TABLE `absence` (
+  `Id_User` int(11) NOT NULL,
+  `ID_SEANCE` int(11) NOT NULL,
+  `ETAT` text DEFAULT NULL,
+  `STATUT` text DEFAULT NULL,
+  `date_seance` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `administrateur`
+--
+
+CREATE TABLE `administrateur` (
+  `Id_User` int(11) NOT NULL,
+  `NOM_USER` text DEFAULT NULL,
+  `PRENOM_USER` text DEFAULT NULL,
+  `DATEN_USER` date DEFAULT NULL,
+  `CIN_USER` text DEFAULT NULL,
+  `EMAIL_USER` text DEFAULT NULL,
+  `PASSWORD_USER` text DEFAULT NULL,
+  `ADRESSE_USER` text DEFAULT NULL,
+  `TELE_USER` decimal(10,0) DEFAULT NULL,
+  `SEXE_USER` text DEFAULT NULL,
+  `SERVICE_AD` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Déchargement des données de la table `administrateur`
+--
+
+INSERT INTO `administrateur` (`Id_User`, `NOM_USER`, `PRENOM_USER`, `DATEN_USER`, `CIN_USER`, `EMAIL_USER`, `PASSWORD_USER`, `ADRESSE_USER`, `TELE_USER`, `SEXE_USER`, `SERVICE_AD`) VALUES
+(1, 'amina', 'aouari', '2015-03-20', 'a1254kj', 'amina@gmail.com', 'aamina', '279 apokj', '636068245', 'femme', 'informatique'),
+(2, 'aaaaaaadfgh', 'mpoiuy', '2003-01-26', '3lkjhgf', 'akjb@gmail.com', 'aaaa', '124 zertrg', '617134875', 'femme', 'info');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `affilier`
+--
+
+CREATE TABLE `affilier` (
+  `Id_User` int(11) NOT NULL,
+  `ID_GROUPE` int(11) NOT NULL,
+  `TYPE` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `annee`
+--
+
+CREATE TABLE `annee` (
+  `ID_ANNEE` int(11) NOT NULL,
+  `ANNEE_UNIVERSITAIRE` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Déchargement des données de la table `annee`
+--
+
+INSERT INTO `annee` (`ID_ANNEE`, `ANNEE_UNIVERSITAIRE`) VALUES
+(2022, '0000-00-00'),
+(2023, '0000-00-00');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `avoir`
+--
+
+CREATE TABLE `avoir` (
+  `Id_User` int(11) NOT NULL,
+  `ID_ROLE` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `departement`
+--
+
+CREATE TABLE `departement` (
+  `ID_DEPARTEMENT` int(11) NOT NULL,
+  `Id_User` int(11) NOT NULL,
+  `NOM_DEPARTEMENT` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Déchargement des données de la table `departement`
+--
+
+INSERT INTO `departement` (`ID_DEPARTEMENT`, `Id_User`, `NOM_DEPARTEMENT`) VALUES
+(1, 1, 'informatique');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `element`
+--
+
+CREATE TABLE `element` (
+  `ID_ELEMENT` int(11) NOT NULL,
+  `ID_MODULE` int(11) NOT NULL,
+  `Id_User` int(11) NOT NULL,
+  `NOM_ELEMENT` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Déchargement des données de la table `element`
+--
+
+INSERT INTO `element` (`ID_ELEMENT`, `ID_MODULE`, `Id_User`, `NOM_ELEMENT`) VALUES
+(1, 1, 1, 'C++');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `enseignant`
+--
+
+CREATE TABLE `enseignant` (
+  `Id_User` int(11) NOT NULL,
+  `Id_Departement` int(11) NOT NULL,
+  `NOM_USER` text DEFAULT NULL,
+  `PRENOM_USER` text DEFAULT NULL,
+  `DATEN_USER` date DEFAULT NULL,
+  `CIN_USER` text DEFAULT NULL,
+  `EMAIL_USER` text DEFAULT NULL,
+  `PASSWORD_USER` text DEFAULT NULL,
+  `ADRESSE_USER` text DEFAULT NULL,
+  `TELE_USER` decimal(10,0) DEFAULT NULL,
+  `SEXE_USER` text DEFAULT NULL,
+  `TYPE_EN` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Déchargement des données de la table `enseignant`
+--
+
+INSERT INTO `enseignant` (`Id_User`, `Id_Departement`, `NOM_USER`, `PRENOM_USER`, `DATEN_USER`, `CIN_USER`, `EMAIL_USER`, `PASSWORD_USER`, `ADRESSE_USER`, `TELE_USER`, `SEXE_USER`, `TYPE_EN`) VALUES
+(1, 1, 'amina', 'aouari', '2014-03-18', '456^mlkjh', 'amina@gmail.com', 'aamina', '279 lmkjhg', '636068245', 'femme', 'TP');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `etudiant`
+--
+
+CREATE TABLE `etudiant` (
+  `Id_User` int(11) NOT NULL,
+  `ID_FILIERE_` int(11) DEFAULT NULL,
+  `NOM_USER` text DEFAULT NULL,
+  `PRENOM_USER` text DEFAULT NULL,
+  `DATEN_USER` date DEFAULT NULL,
+  `CIN_USER` text DEFAULT NULL,
+  `EMAIL_USER` text DEFAULT NULL,
+  `PASSWORD_USER` text DEFAULT NULL,
+  `ADRESSE_USER` text DEFAULT NULL,
+  `TELE_USER` decimal(10,0) DEFAULT NULL,
+  `SEXE_USER` text DEFAULT NULL,
+  `CNE_ET` text DEFAULT NULL,
+  `ADRESS_PARENTIELLE_ET` text DEFAULT NULL,
+  `NIVEAU_ET` text DEFAULT NULL,
+  `AVERTISEMENT_ET` text DEFAULT NULL,
+  `id_Groupe` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Déchargement des données de la table `etudiant`
+--
+
+INSERT INTO `etudiant` (`Id_User`, `ID_FILIERE_`, `NOM_USER`, `PRENOM_USER`, `DATEN_USER`, `CIN_USER`, `EMAIL_USER`, `PASSWORD_USER`, `ADRESSE_USER`, `TELE_USER`, `SEXE_USER`, `CNE_ET`, `ADRESS_PARENTIELLE_ET`, `NIVEAU_ET`, `AVERTISEMENT_ET`, `id_Groupe`) VALUES
+(1, 1, 'amina', 'aouari', '2015-03-20', '45kjh', 'amina@gmail.com', 'aamina', '1236mlkjh', '636068245', 'femme', 'po854', '35 lkjhgf', '2 eme', '1', 1),
+(2, 1, 'mkmjlk', 'mùpoiujyh', '2003-01-26', 'ùpmolikuyt685', 'khav@gmail.com', 'aaaa', '124 poiuyt', '617134875', 'femme', 'k1235487', '145 piuiyt', '1 ere', 'zero', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `filiere`
+--
+
+CREATE TABLE `filiere` (
+  `ID_FILIERE_` int(11) NOT NULL,
+  `ID_DEPARTEMENT` int(11) NOT NULL,
+  `NOM_FILIERE_` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Déchargement des données de la table `filiere`
+--
+
+INSERT INTO `filiere` (`ID_FILIERE_`, `ID_DEPARTEMENT`, `NOM_FILIERE_`) VALUES
+(1, 1, 'info');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `groupe`
+--
+
+CREATE TABLE `groupe` (
+  `ID_GROUPE` int(11) NOT NULL,
+  `ID_FILIERE_` int(11) NOT NULL,
+  `NOM_GROUPE` text DEFAULT NULL,
+  `TYPE_GROUPE` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Déchargement des données de la table `groupe`
+--
+
+INSERT INTO `groupe` (`ID_GROUPE`, `ID_FILIERE_`, `NOM_GROUPE`, `TYPE_GROUPE`) VALUES
+(1, 1, 'section 1', 'TP');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `module`
+--
+
+CREATE TABLE `module` (
+  `ID_MODULE` int(11) NOT NULL,
+  `ID_FILIERE_` int(11) NOT NULL,
+  `ID_SEMESTRE` int(11) NOT NULL,
+  `NOM_MODULE` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Déchargement des données de la table `module`
+--
+
+INSERT INTO `module` (`ID_MODULE`, `ID_FILIERE_`, `ID_SEMESTRE`, `NOM_MODULE`) VALUES
+(1, 1, 1254, 'c++ & java');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `role`
+--
+
+CREATE TABLE `role` (
+  `ID_ROLE` int(11) NOT NULL,
+  `ROLE` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `seance`
+--
+
+CREATE TABLE `seance` (
+  `ID_SEANCE` int(11) NOT NULL,
+  `ID_ELEMENT` int(11) NOT NULL,
+  `Id_Groupe` int(11) NOT NULL,
+  `Id_User` int(11) NOT NULL,
+  `NUM_SALLE` int(11) DEFAULT NULL,
+  `date_D` datetime DEFAULT NULL,
+  `date_F` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Déchargement des données de la table `seance`
+--
+
+INSERT INTO `seance` (`ID_SEANCE`, `ID_ELEMENT`, `Id_Groupe`, `Id_User`, `NUM_SALLE`, `date_D`, `date_F`) VALUES
+(1, 1, 1, 1, 1, NULL, NULL),
+(2, 1, 1, 1, 1, '2023-04-11 11:33:15', '2023-04-11 13:13:14');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `semestre`
+--
+
+CREATE TABLE `semestre` (
+  `ID_SEMESTRE` int(11) NOT NULL,
+  `Id_annee` int(11) NOT NULL,
+  `NUM_SEMESTRE` int(11) DEFAULT NULL,
+  `DATED_SEMESTRE` date DEFAULT NULL,
+  `DATEF_SEMESTRE` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Déchargement des données de la table `semestre`
+--
+
+INSERT INTO `semestre` (`ID_SEMESTRE`, `Id_annee`, `NUM_SEMESTRE`, `DATED_SEMESTRE`, `DATEF_SEMESTRE`) VALUES
+(1254, 1, 1, '2023-03-16', '2022-02-04');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `travailler`
+--
+
+CREATE TABLE `travailler` (
+  `Id_User` int(11) NOT NULL,
+  `ID_DEPARTEMENT` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `utilisateur`
+--
+
+CREATE TABLE `utilisateur` (
+  `Id_User` int(11) NOT NULL,
+  `NOM_USER` text DEFAULT NULL,
+  `PRENOM_USER` text DEFAULT NULL,
+  `DATEN_USER` date DEFAULT NULL,
+  `CIN_USER` text DEFAULT NULL,
+  `EMAIL_USER` text DEFAULT NULL,
+  `PASSWORD_USER` text DEFAULT NULL,
+  `ADRESSE_USER` text DEFAULT NULL,
+  `TELE_USER` decimal(10,0) DEFAULT NULL,
+  `SEXE_USER` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Déchargement des données de la table `utilisateur`
+--
+
+INSERT INTO `utilisateur` (`Id_User`, `NOM_USER`, `PRENOM_USER`, `DATEN_USER`, `CIN_USER`, `EMAIL_USER`, `PASSWORD_USER`, `ADRESSE_USER`, `TELE_USER`, `SEXE_USER`) VALUES
+(1, 'amina', 'aouari', '2015-03-20', 'poijhnz563', 'amina@gmail.com', 'aamina', '276 aùpmlkjh', '617134875', 'femme'),
+(2, 'mkmjlk', 'mùpoiujyh', '2003-01-26', 'ùpmolikuyt685', 'khav@gmail.com', 'aaaa', '124 poiuyt', '617134875', 'femme');
+
+--
+-- Index pour les tables déchargées
+--
+
+--
+-- Index pour la table `absence`
+--
+ALTER TABLE `absence`
+  ADD PRIMARY KEY (`Id_User`,`ID_SEANCE`),
+  ADD KEY `FK_ABSENCE` (`ID_SEANCE`);
+
+--
+-- Index pour la table `administrateur`
+--
+ALTER TABLE `administrateur`
+  ADD PRIMARY KEY (`Id_User`);
+
+--
+-- Index pour la table `affilier`
+--
+ALTER TABLE `affilier`
+  ADD PRIMARY KEY (`Id_User`,`ID_GROUPE`),
+  ADD KEY `FK_AFFILIER` (`ID_GROUPE`);
+
+--
+-- Index pour la table `annee`
+--
+ALTER TABLE `annee`
+  ADD PRIMARY KEY (`ID_ANNEE`);
+
+--
+-- Index pour la table `avoir`
+--
+ALTER TABLE `avoir`
+  ADD PRIMARY KEY (`Id_User`,`ID_ROLE`),
+  ADD KEY `FK_AVOIR2` (`ID_ROLE`);
+
+--
+-- Index pour la table `departement`
+--
+ALTER TABLE `departement`
+  ADD PRIMARY KEY (`ID_DEPARTEMENT`),
+  ADD KEY `FK_ETRE_CHEF` (`Id_User`);
+
+--
+-- Index pour la table `element`
+--
+ALTER TABLE `element`
+  ADD PRIMARY KEY (`ID_ELEMENT`),
+  ADD KEY `FK_COMPORTER` (`ID_MODULE`),
+  ADD KEY `FK_ENSEIGNER_PAR` (`Id_User`);
+
+--
+-- Index pour la table `enseignant`
+--
+ALTER TABLE `enseignant`
+  ADD PRIMARY KEY (`Id_User`);
+
+--
+-- Index pour la table `etudiant`
+--
+ALTER TABLE `etudiant`
+  ADD PRIMARY KEY (`Id_User`),
+  ADD KEY `FK_IDFILI` (`ID_FILIERE_`),
+  ADD KEY `groupe` (`id_Groupe`);
+
+--
+-- Index pour la table `filiere`
+--
+ALTER TABLE `filiere`
+  ADD PRIMARY KEY (`ID_FILIERE_`),
+  ADD KEY `FK_COMPRENDRE` (`ID_DEPARTEMENT`);
+
+--
+-- Index pour la table `groupe`
+--
+ALTER TABLE `groupe`
+  ADD PRIMARY KEY (`ID_GROUPE`),
+  ADD KEY `FK_APPARTENIR` (`ID_FILIERE_`);
+
+--
+-- Index pour la table `module`
+--
+ALTER TABLE `module`
+  ADD PRIMARY KEY (`ID_MODULE`),
+  ADD KEY `FK_CONTENIR` (`ID_FILIERE_`),
+  ADD KEY `FK_TROUVER` (`ID_SEMESTRE`);
+
+--
+-- Index pour la table `role`
+--
+ALTER TABLE `role`
+  ADD PRIMARY KEY (`ID_ROLE`);
+
+--
+-- Index pour la table `seance`
+--
+ALTER TABLE `seance`
+  ADD PRIMARY KEY (`ID_SEANCE`),
+  ADD KEY `FK_ASSISTER` (`Id_Groupe`),
+  ADD KEY `FK_ENSEIGNER` (`Id_User`),
+  ADD KEY `FK_INCLURE` (`ID_ELEMENT`);
+
+--
+-- Index pour la table `semestre`
+--
+ALTER TABLE `semestre`
+  ADD PRIMARY KEY (`ID_SEMESTRE`);
+
+--
+-- Index pour la table `travailler`
+--
+ALTER TABLE `travailler`
+  ADD PRIMARY KEY (`Id_User`,`ID_DEPARTEMENT`),
+  ADD KEY `FK_TRAVAILLER2` (`ID_DEPARTEMENT`);
+
+--
+-- Index pour la table `utilisateur`
+--
+ALTER TABLE `utilisateur`
+  ADD PRIMARY KEY (`Id_User`);
+
+--
+-- Contraintes pour les tables déchargées
+--
+
+--
+-- Contraintes pour la table `absence`
+--
+ALTER TABLE `absence`
+  ADD CONSTRAINT `FK_ABSENCE` FOREIGN KEY (`ID_SEANCE`) REFERENCES `seance` (`ID_SEANCE`),
+  ADD CONSTRAINT `FK_ABSENCE2` FOREIGN KEY (`Id_User`) REFERENCES `etudiant` (`Id_User`);
+
+--
+-- Contraintes pour la table `affilier`
+--
+ALTER TABLE `affilier`
+  ADD CONSTRAINT `FK_AFFILIER` FOREIGN KEY (`ID_GROUPE`) REFERENCES `groupe` (`ID_GROUPE`),
+  ADD CONSTRAINT `FK_AFFILIER2` FOREIGN KEY (`Id_User`) REFERENCES `etudiant` (`Id_User`);
+
+--
+-- Contraintes pour la table `avoir`
+--
+ALTER TABLE `avoir`
+  ADD CONSTRAINT `FK_AVOIR` FOREIGN KEY (`Id_User`) REFERENCES `utilisateur` (`Id_User`),
+  ADD CONSTRAINT `FK_AVOIR2` FOREIGN KEY (`ID_ROLE`) REFERENCES `role` (`ID_ROLE`);
+
+--
+-- Contraintes pour la table `departement`
+--
+ALTER TABLE `departement`
+  ADD CONSTRAINT `FK_ETRE_CHEF` FOREIGN KEY (`Id_User`) REFERENCES `enseignant` (`Id_User`);
+
+--
+-- Contraintes pour la table `element`
+--
+ALTER TABLE `element`
+  ADD CONSTRAINT `FK_COMPORTER` FOREIGN KEY (`ID_MODULE`) REFERENCES `module` (`ID_MODULE`),
+  ADD CONSTRAINT `FK_ENSEIGNER_PAR` FOREIGN KEY (`Id_User`) REFERENCES `enseignant` (`Id_User`);
+
+--
+-- Contraintes pour la table `enseignant`
+--
+ALTER TABLE `enseignant`
+  ADD CONSTRAINT `FK_HERITAGE_4` FOREIGN KEY (`Id_User`) REFERENCES `utilisateur` (`Id_User`);
+
+--
+-- Contraintes pour la table `etudiant`
+--
+ALTER TABLE `etudiant`
+  ADD CONSTRAINT `FK_HERITAGE_5` FOREIGN KEY (`Id_User`) REFERENCES `utilisateur` (`Id_User`),
+  ADD CONSTRAINT `FK_IDFILI` FOREIGN KEY (`ID_FILIERE_`) REFERENCES `filiere` (`ID_FILIERE_`),
+  ADD CONSTRAINT `groupe` FOREIGN KEY (`id_Groupe`) REFERENCES `groupe` (`ID_GROUPE`);
+
+--
+-- Contraintes pour la table `filiere`
+--
+ALTER TABLE `filiere`
+  ADD CONSTRAINT `FK_COMPRENDRE` FOREIGN KEY (`ID_DEPARTEMENT`) REFERENCES `departement` (`ID_DEPARTEMENT`);
+
+--
+-- Contraintes pour la table `groupe`
+--
+ALTER TABLE `groupe`
+  ADD CONSTRAINT `FK_APPARTENIR` FOREIGN KEY (`ID_FILIERE_`) REFERENCES `filiere` (`ID_FILIERE_`);
+
+--
+-- Contraintes pour la table `module`
+--
+ALTER TABLE `module`
+  ADD CONSTRAINT `FK_CONTENIR` FOREIGN KEY (`ID_FILIERE_`) REFERENCES `filiere` (`ID_FILIERE_`),
+  ADD CONSTRAINT `FK_TROUVER` FOREIGN KEY (`ID_SEMESTRE`) REFERENCES `semestre` (`ID_SEMESTRE`);
+
+--
+-- Contraintes pour la table `seance`
+--
+ALTER TABLE `seance`
+  ADD CONSTRAINT `FK_ASSISTER` FOREIGN KEY (`Id_Groupe`) REFERENCES `groupe` (`ID_GROUPE`),
+  ADD CONSTRAINT `FK_ENSEIGNER` FOREIGN KEY (`Id_User`) REFERENCES `enseignant` (`Id_User`),
+  ADD CONSTRAINT `FK_INCLURE` FOREIGN KEY (`ID_ELEMENT`) REFERENCES `element` (`ID_ELEMENT`);
+
+--
+-- Contraintes pour la table `travailler`
+--
+ALTER TABLE `travailler`
+  ADD CONSTRAINT `FK_TRAVAILLER` FOREIGN KEY (`Id_User`) REFERENCES `enseignant` (`Id_User`),
+  ADD CONSTRAINT `FK_TRAVAILLER2` FOREIGN KEY (`ID_DEPARTEMENT`) REFERENCES `departement` (`ID_DEPARTEMENT`);
+
+--
+-- Contraintes pour la table `utilisateur`
+--
+ALTER TABLE `utilisateur`
+  ADD CONSTRAINT `FK_GERER` FOREIGN KEY (`Id_User`) REFERENCES `administrateur` (`Id_User`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
