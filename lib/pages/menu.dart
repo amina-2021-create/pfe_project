@@ -84,7 +84,10 @@ class _Menu extends State<Menu> {
     // TODO: implement build
     
     print(this.user_id);
-    this.getSeanceByProf();
+    if(seance == null){
+      this.getSeanceByProf();
+    }
+    
     return Scaffold(
     
         appBar: AppBar(
@@ -201,7 +204,7 @@ class _Menu extends State<Menu> {
     width: 220, // Largeur du bouton
     height: 70, // Hauteur du bouton
     child: ElevatedButton(
-      onPressed: this.seance !=null ? routerStudentList(this.seance?.id) () :null,
+      onPressed:   routerStudentList(),
      
       child: Text('Seance',
       style: TextStyle(
@@ -225,24 +228,30 @@ void getSeanceByProf() async {
         .get(Uri.parse('http://10.0.2.2/api_data/api/studentdata.php?prof_id=${this.user_id}'));
     print(response.body.toString());
     if (response.statusCode == 200) {
-      var result = jsonDecode(response.body.toString());
+      final List result = json.decode(response.body);
       seances = result.map((e) => Seance.fromJson(e)).toList();
-      setState(() {
-         seance = seances[0];
-      });
+       seance = seances[0];
+      /*setState(() {
+        
+      });*/
 
     } else {
       throw Exception('Failed to load data');
     }
   }
 
-  routerStudentList(String? id) {
+  routerStudentList() {
+    print(seance);
+    if(seance != null){
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => StudentList(
       
-      id_seance: id ?? "",
+      id_seance: seance?.id ?? "",
 
     )));
+
+    }
+    
   }
 
 }
