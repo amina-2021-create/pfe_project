@@ -148,7 +148,7 @@ class StudentListState extends State<StudentList> {
                         Align(
                           alignment: Alignment.centerLeft,
                           child: CircleAvatar(
-                            backgroundColor: Colors.orange,
+                            backgroundColor: Colors.blue,
                             child: Icon(
                               Icons.wc,
                               color: Colors.white,
@@ -262,11 +262,12 @@ class StudentListState extends State<StudentList> {
                         margin: EdgeInsets.all(8),
                         
                         child: IconButton(
-                          icon: Icon(
-                              _areEyesOpen ? Icons.visibility : Icons.visibility_off),
+                          icon: const Icon(
+                               Icons.visibility),
                           iconSize: 32,
                           color: Color.fromARGB(255, 0, 0, 0),
-                          onPressed: () {
+                          onPressed: ()=> insertAbsence(students[position].Id_User)
+                          /*{
                             setState(() {
                               _areEyesOpen = !_areEyesOpen;
                               students[position];
@@ -275,7 +276,7 @@ class StudentListState extends State<StudentList> {
                             ID=students[position].Id_User??"";
                             setState(() {});
                             handlerec();
-                          },
+                          },*/
                         ),
                       ),
                     
@@ -339,6 +340,23 @@ Future<void> rec() async {
     print(rec());
     if (rec() == true)
       print('done');
+  }
+
+  insertAbsence( String ? id_etudient) async {
+
+    final response = await http
+        .get(Uri.parse('http://10.0.2.2/api_data/api/add.php?seance_id=${id_seance} & etudient_id=$id_etudient'));
+    print(response.body.toString());
+    if (response.statusCode == 200) {
+
+
+      /*setState(() {
+
+      });*/
+
+    } else {
+      throw Exception('Failed to load data');
+    }
   }
   
 
