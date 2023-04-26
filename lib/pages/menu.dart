@@ -93,7 +93,7 @@ class _Menu extends State<Menu> {
         appBar: AppBar(
           
           title: Text(
-            user_id,
+            "Menu"
           ),
           backgroundColor: Color.fromARGB(255, 12, 67, 112),
         ),
@@ -206,7 +206,7 @@ class _Menu extends State<Menu> {
     child: ElevatedButton(
       onPressed: () => routerStudentList(),
      
-      child: Text('Seance',
+      child: Text('Seance' ,
       style: TextStyle(
           fontSize: 25, // Taille du texte
         ),

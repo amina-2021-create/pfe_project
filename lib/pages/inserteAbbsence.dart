@@ -112,20 +112,20 @@ class StudentListState extends State<StudentList> {
   StudentListState({required this.id_seance});
   List<userDetails> students = [];
   int count = 0;
-  
+
   var ID;
-  bool _areEyesOpen = true ;
+  bool _areEyesOpen = true;
   @override
   Widget build(BuildContext context) {
     if (students.length == 0) {
       print("object");
       _loadRecycler();
     }
-     
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Student List"),
-        backgroundColor: Colors.orange,
+        backgroundColor: Color.fromARGB(255, 8, 32, 188),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -169,33 +169,32 @@ class StudentListState extends State<StudentList> {
                   )),
             ),
           ),
-         
           Container(
             child: getStudentList(),
           ),
           Container(
             alignment: Alignment.bottomRight,
-            child:ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => Menu(user_id: "",)));
-                      },
-                      child: Text(
-                        'enregister',
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.white,
-                        ),
-                      ),
-                      
-                    ),
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Menu(
+                              user_id: "",
+                            )));
+              },
+              child: Text(
+                'enregister',
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.white,
+                ),
+              ),
+            ),
           )
         ],
-        
       ),
-      
-    
     );
-      
   }
 
   //region get student list and card
@@ -258,15 +257,17 @@ class StudentListState extends State<StudentList> {
                         ),
                       ),
                       Container(
-                        
                         margin: EdgeInsets.all(8),
-                        
                         child: IconButton(
-                          icon: const Icon(
-                               Icons.visibility),
                           iconSize: 32,
                           color: Color.fromARGB(255, 0, 0, 0),
-                          onPressed: ()=> insertAbsence(students[position].Id_User)
+                          onPressed: () => insertAbsence(
+                              students[position].Id_User,
+                              students[position].etat),
+                          icon: Icon(students[position].etat == "absent"
+                              ? Icons.visibility_off
+                              : Icons.visibility),
+
                           /*{
                             setState(() {
                               _areEyesOpen = !_areEyesOpen;
@@ -279,7 +280,6 @@ class StudentListState extends State<StudentList> {
                           },*/
                         ),
                       ),
-                    
                     ],
                   ),
                   onTap: () {},
@@ -288,15 +288,14 @@ class StudentListState extends State<StudentList> {
             );
           }),
     );
-    
   }
-   
+
   //endregion
 
   //region load recycler
   void _loadRecycler() async {
-    final response = await http
-        .get(Uri.parse('http://10.0.2.2/api_data/api/studentdata.php?seance_id=${this.id_seance}'));
+    final response = await http.get(Uri.parse(
+        'http://10.0.2.2/api_data/api/studentdata.php?seance_id=${this.id_seance}'));
     print(response.toString());
     if (response.statusCode == 200) {
       final List result = json.decode(response.body);
@@ -310,23 +309,20 @@ class StudentListState extends State<StudentList> {
       throw Exception('Failed to load data');
     }
   }
-  
+
 //endregion
 
-Future<void> rec() async {
+  Future<void> rec() async {
     try {
       var response = await post(
           Uri.parse('http://10.0.2.2/api_data/api/add.php'),
-          body: {
-            ID  = ID
-          });
+          body: {ID = ID});
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
         print(data);
         print(data['message']);
         if (data['message'] == 'ok') {
           print('recuperer');
-          
         } else {
           print('failed');
         }
@@ -335,30 +331,37 @@ Future<void> rec() async {
       print(e.toString());
     }
   }
-  
-   void handlerec() {
+
+  void handlerec() {
     print(rec());
-    if (rec() == true)
-      print('done');
+    if (rec() == true) print('done');
   }
 
-  insertAbsence( String ? id_etudient) async {
+  insertAbsence(String? id_etudient, String? etat) async {
+    if (etat != 'absent') {
+      final response = await http.get(Uri.parse(
+          'http://10.0.2.2/api_data/api/add.php?seance_id=${id_seance} & etudient_id=$id_etudient'));
+      print(response.body.toString());
 
-    final response = await http
-        .get(Uri.parse('http://10.0.2.2/api_data/api/add.php?seance_id=${id_seance} & etudient_id=$id_etudient'));
-    print(response.body.toString());
-    if (response.statusCode == 200) {
-
-
-      /*setState(() {
-
-      });*/
-
+      if (response.statusCode == 200) {
+        setState(() {
+          this._loadRecycler();
+        });
+      } else {
+        throw Exception('Failed to load data');
+      }
     } else {
-      throw Exception('Failed to load data');
+      final response = await http.get(Uri.parse(
+          'http://10.0.2.2/api_data/api/absence.php?seance_id=${id_seance} & etudient_id=$id_etudient'));
+      print(response.body.toString());
+
+      if (response.statusCode == 200) {
+        setState(() {
+          this._loadRecycler();
+        });
+      } else {
+        throw Exception('Failed to load data');
+      }
     }
   }
-  
-
-}   
-
+}

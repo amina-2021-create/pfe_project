@@ -3,18 +3,21 @@ class userDetails {
   String? nom;
   String? prenom;
   String? Id_User;
+  String? etat;
 
 userDetails({
   this.cne,
   this.nom,
   this.prenom,
-  this.Id_User 
+  this.Id_User,
+  this.etat
   });
 userDetails.fromJson(Map<String, dynamic> json) {
     cne = json['CNE_ET'];
     nom = json['NOM_USER'];
     prenom = json['PRENOM_USER'];
     Id_User = json['Id_User'];
+    etat = json['etat'];
   }
 
   Map<String, dynamic> toJson() {
@@ -23,6 +26,7 @@ userDetails.fromJson(Map<String, dynamic> json) {
     data['nom'] = nom;
     data['prenom'] = prenom;
     data['Id_User'] = Id_User;
+    data['etat'] = etat;
     return data;
   }
 
